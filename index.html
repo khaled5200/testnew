@@ -1,248 +1,171 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Submit Form</title>
+    <title>Modern Form</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f7fa;
-            margin: 0;
-            padding: 0;
+            margin: 20px;
+            background-color: #f9f9f9;
         }
-
-        .container {
-            width: 100%;
-            max-width: 600px;
-            margin: 50px auto;
+        form {
             background-color: #fff;
-            padding: 30px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: auto;
         }
-
-        h2 {
-            text-align: center;
-            color: #333;
-        }
-
-        label {
-            font-size: 14px;
-            color: #555;
-        }
-
-        input[type="text"],
-        input[type="email"],
-        input[type="date"],
-        input[type="number"],
-        input[type="button"],
-        textarea,
-        select {
+        input, select, button {
             width: 100%;
             padding: 10px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            font-size: 14px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
         }
-
-        textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-
-        input[type="button"]:disabled {
-            background-color: #ddd;
-            cursor: not-allowed;
-        }
-
-        .btn-submit {
+        button {
             background-color: #4CAF50;
             color: white;
             border: none;
             cursor: pointer;
-            transition: background-color 0.3s;
         }
-
-        .btn-submit:hover {
+        button:hover {
             background-color: #45a049;
         }
-
         .error {
             color: red;
-            font-size: 14px;
-        }
-
-        .success {
-            color: green;
-            font-size: 14px;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
+            font-size: 12px;
         }
     </style>
 </head>
 <body>
-
-    <div class="container">
+    <form id="myForm">
         <h2>Submit Your Information</h2>
-        <form id="myForm">
-            <div class="form-group">
-                <label for="name">Name:</label>
-                <select id="name" name="name" required>
-                    <option value="">Select Name</option>
-                    <option value="Ali">Ali</option>
-                    <option value="Ahmed">Ahmed</option>
-                    <option value="Sarah">Sarah</option>
-                    <!-- Add more options here -->
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" placeholder="Enter your email" required>
-            </div>
-            <div class="form-group">
-                <label for="date">Date (dd/mm/yyyy):</label>
-                <input type="date" id="date" name="date" required>
-            </div>
-            <div class="form-group">
-                <label for="vehicleNumber">Vehicle Number:</label>
-                <input type="number" id="vehicleNumber" name="vehicleNumber" min="1" max="7" required>
-                <div id="vehicleError" class="error" style="display:none;">رقم السيارة غير صحيح. يجب أن يكون بين 1 و 7.</div>
-            </div>
-            <div class="form-group">
-                <label for="route">Route (letter + number, max 5 characters):</label>
-                <input type="text" id="route" name="route" placeholder="e.g., A1, B2" required>
-                <div id="routeError" class="error" style="display:none;">الروت يجب أن يتكون من حروف وأرقام فقط ولا يتجاوز 5 أحرف.</div>
-            </div>
-            <div class="form-group">
-                <label for="cash">Cash (numbers only):</label>
-                <input type="number" id="cash" name="cash" required>
-            </div>
-            <div class="form-group">
-                <label for="receivedShipments">Received Shipments (numbers only):</label>
-                <input type="number" id="receivedShipments" name="receivedShipments" required>
-            </div>
-            <div class="form-group">
-                <label for="deliveredShipments">Delivered Shipments (numbers only):</label>
-                <input type="number" id="deliveredShipments" name="deliveredShipments" required>
-            </div>
-            <div class="form-group">
-                <label for="returnedShipments">Returned Shipments:</label>
-                <input type="number" id="returnedShipments" name="returnedShipments" readonly>
-            </div>
-            <div class="form-group">
-                <label for="lostShipments">Lost Shipments:</label>
-                <input type="number" id="lostShipments" name="lostShipments" required>
-            </div>
-            <div class="form-group">
-                <label for="reason">Reason:</label>
-                <textarea id="reason" name="reason" rows="5" maxlength="250" placeholder="Max 50 characters per line, 5 lines"></textarea>
-            </div>
-            <div class="error" id="error-message"></div>
-            <input type="button" class="btn-submit" value="Submit" id="submitBtn">
-            <div class="success" id="success-message"></div>
-        </form>
-    </div>
+        <label for="name">Name:</label>
+        <select id="name" name="name">
+            <option value="">Select your name</option>
+            <option value="Ahmed Saad">Ahmed Saad</option>
+            <option value="Saad Saeed">Saad Saeed</option>
+        </select>
+        <span id="nameError" class="error"></span>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email">
+        <span id="emailError" class="error"></span>
+
+        <label for="carNumber">Car Number:</label>
+        <input type="number" id="carNumber" name="carNumber">
+        <span id="carNumberError" class="error"></span>
+
+        <label for="route">Route:</label>
+        <input type="text" id="route" name="route" maxlength="5">
+        <span id="routeError" class="error"></span>
+
+        <label for="cash">Cash:</label>
+        <input type="number" id="cash" name="cash">
+        <span id="cashError" class="error"></span>
+
+        <button type="submit">Submit</button>
+    </form>
 
     <script>
-        // حفظ الجلسة للمستخدم
-        if (sessionStorage.getItem('userSession')) {
-            const sessionData = JSON.parse(sessionStorage.getItem('userSession'));
-            const sessionTime = new Date(sessionData.timestamp);
-            const currentTime = new Date();
-            const diffTime = currentTime - sessionTime;
+        const form = document.getElementById('myForm');
 
-            // إذا مر أكثر من ساعة على الجلسة، حذف الجلسة
-            if (diffTime > 3600000) {
-                sessionStorage.removeItem('userSession');
-                alert("Session expired.");
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            let valid = true;
+
+            // Validate name
+            const name = document.getElementById('name').value;
+            const nameError = document.getElementById('nameError');
+            if (!name) {
+                nameError.textContent = "Please select a name.";
+                valid = false;
             } else {
-                document.getElementById('submitBtn').disabled = true; // تعطيل زر التعديل بعد التسجيل
-                alert("You can modify the form until the session expires.");
+                nameError.textContent = "";
             }
-        }
 
-        // عند التسجيل، حفظ الجلسة للمستخدم
-        document.getElementById('submitBtn').onclick = function(event) {
-            const vehicleNumber = document.getElementById('vehicleNumber').value;
+            // Validate email
+            const email = document.getElementById('email').value;
+            const emailError = document.getElementById('emailError');
+            if (!email || !email.includes("@")) {
+                emailError.textContent = "Please enter a valid email.";
+                valid = false;
+            } else {
+                emailError.textContent = "";
+            }
+
+            // Validate car number
+            const carNumber = parseInt(document.getElementById('carNumber').value);
+            const carNumberError = document.getElementById('carNumberError');
+            if (![1, 2, 3, 5, 8].includes(carNumber)) {
+                carNumberError.textContent = "Invalid car number. Allowed: 1, 2, 3, 5, 8.";
+                valid = false;
+            } else {
+                carNumberError.textContent = "";
+            }
+
+            // Validate route
             const route = document.getElementById('route').value;
-
-            // التحقق من رقم السيارة
-            if (vehicleNumber < 1 || vehicleNumber > 7) {
-                document.getElementById('vehicleError').style.display = 'block';
-                return;
-            } else {
-                document.getElementById('vehicleError').style.display = 'none';
-            }
-
-            // التحقق من قيمة الروت
+            const routeError = document.getElementById('routeError');
             if (!/^[A-Za-z0-9]{1,5}$/.test(route)) {
-                document.getElementById('routeError').style.display = 'block';
-                return;
+                routeError.textContent = "Route must be alphanumeric and not exceed 5 characters.";
+                valid = false;
             } else {
-                document.getElementById('routeError').style.display = 'none';
+                routeError.textContent = "";
             }
 
-            // حفظ بيانات الجلسة
-            const userData = {
-                name: document.getElementById('name').value,
-                email: document.getElementById('email').value,
-                timestamp: new Date().toISOString()
-            };
-            sessionStorage.setItem('userSession', JSON.stringify(userData));
+            // Validate cash
+            const cash = document.getElementById('cash').value;
+            const cashError = document.getElementById('cashError');
+            if (!cash || isNaN(cash)) {
+                cashError.textContent = "Please enter a valid number.";
+                valid = false;
+            } else {
+                cashError.textContent = "";
+            }
 
-            // منع إرسال الطلب أكثر من مرة
-            document.getElementById('submitBtn').disabled = true;
+            if (valid) {
+                const formData = {
+                    name: name,
+                    email: email,
+                    carNumber: carNumber,
+                    route: route,
+                    cash: cash
+                };
 
-            const formData = new FormData();
-            formData.append('name', document.getElementById('name').value);
-            formData.append('email', document.getElementById('email').value);
-            formData.append('date', document.getElementById('date').value);
-            formData.append('vehicleNumber', document.getElementById('vehicleNumber').value);
-            formData.append('route', document.getElementById('route').value);
-            formData.append('cash', document.getElementById('cash').value);
-            formData.append('receivedShipments', document.getElementById('receivedShipments').value);
-            formData.append('deliveredShipments', document.getElementById('deliveredShipments').value);
-            formData.append('returnedShipments', document.getElementById('receivedShipments').value - document.getElementById('deliveredShipments').value); // حساب الشحنات المرتجعة تلقائياً
-            formData.append('lostShipments', document.getElementById('lostShipments').value);
-            formData.append('reason', document.getElementById('reason').value);
+                // Save data to localStorage
+                localStorage.setItem('formData', JSON.stringify(formData));
 
-            // إرسال البيانات إلى الخادم
-            fetch('https://script.google.com/macros/s/AKfycbzc1EdbkvTHQKNMEILgYSBrdjj9klaeMiqSL_RzItBosiV3ocJFcV8bBEm8Yn1u3cbn6w/exec', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    document.getElementById('success-message').textContent = 'Data submitted successfully!';
-                    document.getElementById('error-message').textContent = '';
-                } else {
-                    document.getElementById('error-message').textContent = 'Error submitting data: ' + data.error;
-                }
-                // إعادة تمكين الزر بعد استجابة الخادم
-                document.getElementById('submitBtn').disabled = false;
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('error-message').textContent = 'Error submitting data!';
-                document.getElementById('submitBtn').disabled = false;
-            });
-        };
+                // Send data to Google Apps Script
+                fetch('https://script.google.com/macros/s/AKfycb**********/exec', {
+                    method: 'POST',
+                    body: JSON.stringify(formData),
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert('Data submitted successfully!');
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error submitting data.');
+                });
+            }
+        });
 
-        // حساب الشحنات المرتجعة تلقائياً
-        document.getElementById('receivedShipments').oninput = calculateReturnedShipments;
-        document.getElementById('deliveredShipments').oninput = calculateReturnedShipments;
-
-        function calculateReturnedShipments() {
-            const received = document.getElementById('receivedShipments').value;
-            const delivered = document.getElementById('deliveredShipments').value;
-            document.getElementById('returnedShipments').value = received - delivered;
+        // Prefill form if data exists
+        const savedData = JSON.parse(localStorage.getItem('formData'));
+        if (savedData) {
+            document.getElementById('name').value = savedData.name;
+            document.getElementById('email').value = savedData.email;
+            document.getElementById('carNumber').value = savedData.carNumber;
+            document.getElementById('route').value = savedData.route;
+            document.getElementById('cash').value = savedData.cash;
         }
     </script>
-
 </body>
 </html>
