@@ -1,80 +1,163 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Submit Form</title>
+    <style>
+        /* تصميم صفحة عصري */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            font-size: 14px;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="date"],
+        input[type="number"],
+        input[type="button"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        input[type="button"]:disabled {
+            background-color: #ddd;
+            cursor: not-allowed;
+        }
+
+        .btn-submit {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-submit:hover {
+            background-color: #45a049;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+
+        .success {
+            color: green;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+    </style>
 </head>
 <body>
-    <h2>Submit Your Information</h2>
-    <form id="myForm">
-        <label for="date">Date (dd/mm/yyyy):</label><br>
-        <input type="text" id="date" name="date" placeholder="dd/mm/yyyy" maxlength="10" oninput="formatDate(this)"><br><br>
-        
-        <label for="name">Name:</label><br>
-        <input type="text" id="name" name="name" list="nameList" placeholder="Search name..." required><br><br>
-        <datalist id="nameList">
-            <option value="Ahmed saad">
-            <option value="saad saeed">
-        </datalist><br><br>
-        
-        <label for="vehicleNumber">Vehicle Number:</label><br>
-        <input type="number" id="vehicleNumber" name="vehicleNumber" min="1" max="7" required><br><br>
-        
-        <label for="route">Route (Letter + Number):</label><br>
-        <input type="text" id="route" name="route" pattern="[A-Za-z][0-9]" required><br><br>
-        
-        <label for="cash">Cash:</label><br>
-        <input type="number" id="cash" name="cash" required><br><br>
-        
-        <label for="receivedShipments">Received Shipments:</label><br>
-        <input type="number" id="receivedShipments" name="receivedShipments" required><br><br>
-        
-        <label for="deliveredShipments">Delivered Shipments:</label><br>
-        <input type="number" id="deliveredShipments" name="deliveredShipments" required><br><br>
-        
-        <label for="returnedShipments">Returned Shipments:</label><br>
-        <input type="text" id="returnedShipments" name="returnedShipments" readonly><br><br>
-        
-        <label for="lostShipments">Lost Shipments:</label><br>
-        <input type="number" id="lostShipments" name="lostShipments" required><br><br>
-        
-        <label for="reason">Reason (Max 50 characters per line, 5 lines):</label><br>
-        <textarea id="reason" name="reason" rows="5" maxlength="50" required></textarea><br><br>
-        
-        <input type="submit" value="Submit">
-    </form>
-    
+
+    <div class="container">
+        <h2>Submit Your Information</h2>
+        <form id="myForm">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" placeholder="Enter your name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <label for="date">Date (dd/mm/yyyy):</label>
+                <input type="date" id="date" name="date" required>
+            </div>
+            <div class="form-group">
+                <label for="vehicleNumber">Vehicle Number:</label>
+                <input type="number" id="vehicleNumber" name="vehicleNumber" min="1" max="7" required>
+            </div>
+            <div class="form-group">
+                <label for="route">Route (letter + number):</label>
+                <input type="text" id="route" name="route" placeholder="e.g., A1, B2" required>
+            </div>
+            <div class="form-group">
+                <label for="cash">Cash (numbers only):</label>
+                <input type="number" id="cash" name="cash" required>
+            </div>
+            <div class="form-group">
+                <label for="receivedShipments">Received Shipments (numbers only):</label>
+                <input type="number" id="receivedShipments" name="receivedShipments" required>
+            </div>
+            <div class="form-group">
+                <label for="deliveredShipments">Delivered Shipments (numbers only):</label>
+                <input type="number" id="deliveredShipments" name="deliveredShipments" required>
+            </div>
+            <div class="form-group">
+                <label for="returnedShipments">Returned Shipments:</label>
+                <input type="number" id="returnedShipments" name="returnedShipments" readonly>
+            </div>
+            <div class="form-group">
+                <label for="lostShipments">Lost Shipments:</label>
+                <input type="number" id="lostShipments" name="lostShipments" required>
+            </div>
+            <div class="form-group">
+                <label for="reason">Reason:</label>
+                <textarea id="reason" name="reason" rows="5" maxlength="250" placeholder="Max 50 characters per line, 5 lines"></textarea>
+            </div>
+            <div class="error" id="error-message"></div>
+            <input type="button" class="btn-submit" value="Submit" id="submitBtn">
+            <div class="success" id="success-message"></div>
+        </form>
+    </div>
+
     <script>
-        // Format Date input to dd/mm/yyyy with automatic "/"
-        function formatDate(input) {
-            let value = input.value.replace(/[^0-9]/g, '').slice(0, 8); // Allow only numbers and limit to 8 digits
-            if (value.length > 2) value = value.slice(0, 2) + '/' + value.slice(2);
-            if (value.length > 5) value = value.slice(0, 5) + '/' + value.slice(5, 10);
-            input.value = value;
-        }
-        
-        // Calculate returned shipments automatically
-        document.getElementById('myForm').onsubmit = function(event) {
-            event.preventDefault();
-            
-            const received = document.getElementById('receivedShipments').value;
-            const delivered = document.getElementById('deliveredShipments').value;
-            
-            // Calculate returned shipments
-            const returned = received - delivered;
-            document.getElementById('returnedShipments').value = returned;
+        document.getElementById('submitBtn').onclick = function(event) {
+            // منع إرسال الطلب أكثر من مرة
+            document.getElementById('submitBtn').disabled = true;
 
             const formData = new FormData();
-            formData.append('date', document.getElementById('date').value);
             formData.append('name', document.getElementById('name').value);
+            formData.append('email', document.getElementById('email').value);
+            formData.append('date', document.getElementById('date').value);
             formData.append('vehicleNumber', document.getElementById('vehicleNumber').value);
             formData.append('route', document.getElementById('route').value);
             formData.append('cash', document.getElementById('cash').value);
-            formData.append('receivedShipments', received);
-            formData.append('deliveredShipments', delivered);
-            formData.append('returnedShipments', returned);
+            formData.append('receivedShipments', document.getElementById('receivedShipments').value);
+            formData.append('deliveredShipments', document.getElementById('deliveredShipments').value);
+            formData.append('returnedShipments', document.getElementById('receivedShipments').value - document.getElementById('deliveredShipments').value); // حساب الشحنات المرتجعة تلقائياً
             formData.append('lostShipments', document.getElementById('lostShipments').value);
             formData.append('reason', document.getElementById('reason').value);
 
+            // إرسال البيانات إلى الخادم
             fetch('https://script.google.com/macros/s/AKfycbzc1EdbkvTHQKNMEILgYSBrdjj9klaeMiqSL_RzItBosiV3ocJFcV8bBEm8Yn1u3cbn6w/exec', {
                 method: 'POST',
                 body: formData
@@ -82,16 +165,31 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert('Data submitted successfully!');
+                    document.getElementById('success-message').textContent = 'Data submitted successfully!';
+                    document.getElementById('error-message').textContent = '';
                 } else {
-                    alert('Error submitting data: ' + data.error);
+                    document.getElementById('error-message').textContent = 'Error submitting data: ' + data.error;
                 }
+                // إعادة تمكين الزر بعد استجابة الخادم
+                document.getElementById('submitBtn').disabled = false;
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('Error submitting data!');
+                document.getElementById('error-message').textContent = 'Error submitting data!';
+                document.getElementById('submitBtn').disabled = false;
             });
+        };
+
+        // حساب الشحنات المرتجعة تلقائياً
+        document.getElementById('receivedShipments').oninput = calculateReturnedShipments;
+        document.getElementById('deliveredShipments').oninput = calculateReturnedShipments;
+
+        function calculateReturnedShipments() {
+            const received = document.getElementById('receivedShipments').value;
+            const delivered = document.getElementById('deliveredShipments').value;
+            document.getElementById('returnedShipments').value = received - delivered;
         }
     </script>
+
 </body>
 </html>
