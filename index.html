@@ -4,257 +4,147 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>نموذج إدخال البيانات</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            width: 90%;
-            max-width: 600px;
-            margin: 50px auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-        label {
-            font-size: 16px;
-            margin: 10px 0;
-            display: block;
-        }
-        select, input[type="text"], input[type="number"], textarea {
-            width: 100%;
-            padding: 10px;
-            margin: 8px 0;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-        .row {
-            display: flex;
-            justify-content: space-between;
-            gap: 20px;
-        }
-        .row div {
-            width: 48%;
-        }
-        .error {
-            color: #fff;
-            background-color: #e74c3c;
-            padding: 10px;
-            border-radius: 5px;
-            font-size: 14px;
-            margin-top: 10px;
-            display: none;
-        }
-        .btn {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            text-align: center;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-            width: 100%;
-        }
-        .btn:hover {
-            background-color: #45a049;
-        }
-        .returned-cell {
-            margin-top: 10px;
-        }
-    </style>
 </head>
 <body>
+    <form id="shipment-form">
+        <label for="date">التاريخ:</label>
+        <input type="text" id="date" name="date" required><br>
 
-    <div class="container">
-        <h1>نموذج إدخال البيانات</h1>
-        
-        <form id="data-form">
-            <!-- التاريخ (يتم إدخال اليوم فقط) -->
-            <label for="date">التاريخ (dd/mm/yyyy)</label>
-            <input type="text" id="date" name="date" placeholder="أدخل اليوم" required>
+        <label for="month-year">الشهر والسنة:</label>
+        <input type="text" id="month-year" name="month-year" required><br>
 
-            <!-- الشهر والسنة يتم ملؤهما تلقائيًا -->
-            <input type="text" id="month-year" name="month-year" readonly style="display:none">
+        <label for="name">الاسم:</label>
+        <input type="text" id="name" name="name" required><br>
 
-            <!-- الاسم -->
-            <label for="name">الاسم</label>
-            <select id="name" name="name">
-                <option value="Hassan Alsaggaf">Hassan Alsaggaf</option>
-                <option value="Khaalid Osman">Khaalid Osman</option>
-                <!-- Add other options as needed -->
-            </select>
+        <label for="vehicle-number">رقم السيارة:</label>
+        <input type="text" id="vehicle-number" name="vehicle-number" required><br>
 
-            <!-- رسالة الخطأ رقم السيارة -->
-            <div id="vehicle-error" class="error"></div>
+        <label for="route-number">رقم الرحلة:</label>
+        <input type="text" id="route-number" name="route-number" required><br>
 
-            <!-- رقم السيارة -->
-            <label for="vehicle-number">رقم السيارة</label>
-            <input type="text" id="vehicle-number" name="vehicle-number" placeholder="أدخل رقم السيارة" required>
+        <label for="cycle-number">رقم الدورة:</label>
+        <input type="text" id="cycle-number" name="cycle-number" required><br>
 
-            <!-- رقم الروت -->
-            <label for="route-number">رقم الروت</label>
-            <input type="text" id="route-number" name="route-number" placeholder="أدخل رقم الروت" required>
+        <label for="cash">النقدي:</label>
+        <input type="number" id="cash" name="cash" required><br>
 
-            <!-- رقم السايكل -->
-            <label for="cycle-number">رقم السايكل</label>
-            <input type="text" id="cycle-number" name="cycle-number" placeholder="أدخل رقم السايكل" required>
+        <label for="total-shipments">إجمالي الشحنات:</label>
+        <input type="number" id="total-shipments" name="total-shipments" required><br>
 
-            <!-- خانة الكاش -->
-            <label for="cash">الكاش</label>
-            <input type="number" id="cash" name="cash" placeholder="أدخل قيمة الكاش" required>
+        <label for="delivered-shipments">الشحنات الموصلة:</label>
+        <input type="number" id="delivered-shipments" name="delivered-shipments" required><br>
 
-            <!-- عدد الشحنات -->
-            <label for="total-shipments">عدد الشحنات</label>
-            <input type="number" id="total-shipments" name="total-shipments" placeholder="أدخل عدد الشحنات" required>
+        <label for="returned-shipments">الشحنات المرتجعة:</label>
+        <input type="number" id="returned-shipments" name="returned-shipments" required><br>
 
-            <!-- عدد الشحنات الموصلة -->
-            <label for="delivered-shipments">عدد الشحنات الموصلة</label>
-            <input type="number" id="delivered-shipments" name="delivered-shipments" placeholder="أدخل عدد الشحنات الموصلة" required>
+        <label for="returned-reason">سبب الإرجاع:</label>
+        <input type="text" id="returned-reason" name="returned-reason"><br>
 
-            <!-- رسالة الخطأ إذا كان عدد الشحنات الموصلة أكبر من عدد الشحنات -->
-            <div id="delivery-error" class="error"></div>
+        <label for="helped-colleague">هل ساعدت زميلًا؟</label>
+        <input type="checkbox" id="helped-colleague" name="helped-colleague"><br>
 
-            <!-- عدد الشحنات المرتجعة (يحسب تلقائيًا) -->
-            <label for="returned-shipments">عدد الشحنات المرتجعة</label>
-            <input type="number" id="returned-shipments" name="returned-shipments" readonly placeholder="عدد الشحنات المرتجعة" required>
+        <label for="colleague-name">اسم الزميل:</label>
+        <input type="text" id="colleague-name" name="colleague-name"><br>
 
-            <!-- خلايا الشحنات المرتجعة (يتم إنشاؤها بناءً على العدد) -->
-            <div id="returned-shipments-cells"></div>
+        <label for="received-shipments">الشحنات المستلمة:</label>
+        <input type="number" id="received-shipments" name="received-shipments"><br>
 
-            <!-- هل ساعدت زميلك؟ -->
-            <label for="helped-colleague">هل ساعدت زميلك؟</label>
-            <select id="helped-colleague" name="helped-colleague">
-                <option value="no">لا</option>
-                <option value="yes">نعم</option>
-            </select>
+        <label for="received-delivered-shipments">الشحنات المستلمة والموصلة:</label>
+        <input type="number" id="received-delivered-shipments" name="received-delivered-shipments"><br>
 
-            <!-- اسم الزميل وعدد الشحنات المستلمة إذا اختار نعم -->
-            <div id="colleague-info" style="display: none;">
-                <label for="colleague-name">اسم الزميل</label>
-                <select id="colleague-name" name="colleague-name">
-                    <option value="Hassan Alsaggaf">Hassan Alsaggaf</option>
-                    <option value="Khaalid Osman">Khaalid Osman</option>
-                    <!-- Add other options as needed -->
-                </select>
+        <label for="helper-name">اسم المساعد:</label>
+        <input type="text" id="helper-name" name="helper-name"><br>
 
-                <label for="received-shipments">عدد الشحنات المستلمة</label>
-                <input type="number" id="received-shipments" name="received-shipments" placeholder="أدخل عدد الشحنات المستلمة">
+        <label for="helper-delivered-shipments">الشحنات الموصلة بواسطة المساعد:</label>
+        <input type="number" id="helper-delivered-shipments" name="helper-delivered-shipments"><br>
 
-                <label for="received-delivered-shipments">عدد الشحنات الموصلة</label>
-                <input type="number" id="received-delivered-shipments" name="received-delivered-shipments" placeholder="أدخل عدد الشحنات الموصلة">
-
-                <label for="returned-reason">السبب (مرتجعة)</label>
-                <input type="text" id="returned-reason" name="returned-reason" placeholder="أدخل سبب المرتجعات">
-            </div>
-
-            <!-- هل ساعدك زميلك؟ -->
-            <label for="helped-by-colleague">هل ساعدك زميلك؟</label>
-            <select id="helped-by-colleague" name="helped-by-colleague">
-                <option value="no">لا</option>
-                <option value="yes">نعم</option>
-            </select>
-
-            <!-- اسم الزميل وعدد الشحنات المسلمة إذا اختار نعم -->
-            <div id="helper-info" style="display: none;">
-                <label for="helper-name">اسم الزميل</label>
-                <select id="helper-name" name="helper-name">
-                    <option value="Hassan Alsaggaf">Hassan Alsaggaf</option>
-                    <option value="Khaalid Osman">Khaalid Osman</option>
-                    <!-- Add other options as needed -->
-                </select>
-
-                <label for="helper-delivered-shipments">عدد الشحنات المسلمة لة</label>
-                <input type="number" id="helper-delivered-shipments" name="helper-delivered-shipments" placeholder="أدخل عدد الشحنات المسلمة">
-            </div>
-
-            <!-- زر الحفظ -->
-            <button type="submit" class="btn">حفظ البيانات</button>
-        </form>
-    </div>
+        <button type="submit">حفظ البيانات</button>
+    </form>
 
     <script>
-        // الحصول على التاريخ الحالي
-        const currentDate = new Date();
-        const currentMonth = currentDate.toLocaleString('default', { month: 'long' });
-        const currentYear = currentDate.getFullYear();
-        
-        // ملء الشهر والسنة تلقائيًا
-        document.getElementById('month-year').value = `${currentMonth} ${currentYear}`;
-
-        const form = document.getElementById('data-form');
-        const vehicleInput = document.getElementById('vehicle-number');
-        const vehicleErrorDiv = document.getElementById('vehicle-error');
-        const returnedShipmentsInput = document.getElementById('returned-shipments');
-        const returnedShipmentsCellsDiv = document.getElementById('returned-shipments-cells');
-        const totalShipmentsInput = document.getElementById('total-shipments');
-        const deliveredShipmentsInput = document.getElementById('delivered-shipments');
-        const deliveryErrorDiv = document.getElementById('delivery-error');
-        const dateInput = document.getElementById('date');
-        const helpedColleagueSelect = document.getElementById('helped-colleague');
-        const colleagueInfoDiv = document.getElementById('colleague-info');
-        const helpedByColleagueSelect = document.getElementById('helped-by-colleague');
-        const helperInfoDiv = document.getElementById('helper-info');
-        
-        // دالة التحقق من أن عدد الشحنات الموصلة لا يتجاوز عدد الشحنات
-        function validateShipments() {
-            const totalShipments = parseInt(totalShipmentsInput.value);
-            const deliveredShipments = parseInt(deliveredShipmentsInput.value);
-            if (deliveredShipments > totalShipments) {
-                deliveryErrorDiv.textContent = "عدد الشحنات الموصلة لا يمكن أن يتجاوز عدد الشحنات";
-                deliveryErrorDiv.style.display = "block";
-            } else {
-                deliveryErrorDiv.style.display = "none";
-                returnedShipmentsInput.value = totalShipments - deliveredShipments;
-                generateReturnedCells(returnedShipmentsInput.value);
-            }
-        }
-
-        // دالة لتوليد خلايا الشحنات المرتجعة بناءً على العدد
-        function generateReturnedCells(count) {
-            returnedShipmentsCellsDiv.innerHTML = "";
-            for (let i = 0; i < count; i++) {
-                const cell = document.createElement('input');
-                cell.type = 'text';
-                cell.placeholder = `سبب المرتجعة ${i + 1}`;
-                cell.name = `returned-reason-${i + 1}`;
-                returnedShipmentsCellsDiv.appendChild(cell);
-            }
-        }
-
-        // إظهار أو إخفاء خانة الزميل في حال ساعد زميله
-        helpedColleagueSelect.addEventListener('change', () => {
-            if (helpedColleagueSelect.value === 'yes') {
-                colleagueInfoDiv.style.display = 'block';
-            } else {
-                colleagueInfoDiv.style.display = 'none';
-            }
-        });
-
-        // إظهار أو إخفاء خانة الزميل الذي ساعده
-        helpedByColleagueSelect.addEventListener('change', () => {
-            if (helpedByColleagueSelect.value === 'yes') {
-                helperInfoDiv.style.display = 'block';
-            } else {
-                helperInfoDiv.style.display = 'none';
-            }
-        });
+        const form = document.getElementById('shipment-form');
 
         // عند إرسال النموذج
         form.addEventListener('submit', (e) => {
             e.preventDefault();
             validateShipments();
-            // باقي الكود لحفظ البيانات...
+
+            // جمع البيانات المدخلة في النموذج
+            const formData = new FormData(form);
+
+            // استخراج القيم
+            const date = formData.get('date');
+            const monthYear = formData.get('month-year');
+            const name = formData.get('name');
+            const vehicleNumber = formData.get('vehicle-number');
+            const routeNumber = formData.get('route-number');
+            const cycleNumber = formData.get('cycle-number');
+            const cash = formData.get('cash');
+            const totalShipments = formData.get('total-shipments');
+            const deliveredShipments = formData.get('delivered-shipments');
+            const returnedShipments = formData.get('returned-shipments');
+            const returnedReason = [];
+            const helpedColleague = formData.get('helped-colleague');
+            const colleagueName = formData.get('colleague-name');
+            const receivedShipments = formData.get('received-shipments');
+            const receivedDeliveredShipments = formData.get('received-delivered-shipments');
+            const helperName = formData.get('helper-name');
+            const helperDeliveredShipments = formData.get('helper-delivered-shipments');
+
+            // جمع أسباب الشحنات المرتجعة
+            for (let i = 1; i <= returnedShipments; i++) {
+                returnedReason.push(formData.get(`returned-reason-${i}`));
+            }
+
+            // إعداد البيانات للإرسال إلى السيرفر
+            const data = {
+                date,
+                monthYear,
+                name,
+                vehicleNumber,
+                routeNumber,
+                cycleNumber,
+                cash,
+                totalShipments,
+                deliveredShipments,
+                returnedShipments,
+                returnedReason,
+                helpedColleague,
+                colleagueName,
+                receivedShipments,
+                receivedDeliveredShipments,
+                helperName,
+                helperDeliveredShipments,
+            };
+
+            // إرسال البيانات باستخدام fetch إلى السكربت الذي يعالج البيانات
+            fetch('https://script.google.com/macros/s/AKfycbzc1EdbkvTHQKNMEILgYSBrdjj9klaeMiqSL_RzItBosiV3ocJFcV8bBEm8Yn1u3cbn6w/exec', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => response.json())
+            .then(result => {
+                alert('تم حفظ البيانات بنجاح!');
+                form.reset(); // إعادة تعيين النموذج بعد الحفظ
+            })
+            .catch(error => {
+                console.error('حدث خطأ:', error);
+                alert('حدث خطأ أثناء حفظ البيانات.');
+            });
         });
+
+        // تحقق من صحة الشحنات
+        function validateShipments() {
+            // التحقق من أن الشحنات الموصلة لا تتجاوز الإجمالي
+            const deliveredShipments = parseInt(document.getElementById('delivered-shipments').value);
+            const totalShipments = parseInt(document.getElementById('total-shipments').value);
+            if (deliveredShipments > totalShipments) {
+                alert('عدد الشحنات الموصلة لا يمكن أن يتجاوز إجمالي الشحنات.');
+            }
+        }
     </script>
 </body>
 </html>
