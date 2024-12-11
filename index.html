@@ -1,123 +1,171 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Submit Form</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f9f9f9;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            margin: 0;
+            padding: 0;
         }
-        form {
-            background-color: #fff;
+
+        .form-container {
+            width: 90%;
+            max-width: 600px;
+            margin: 50px auto;
+            background: rgba(255, 255, 255, 0.9);
             padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
         label {
-            display: block;
+            font-size: 16px;
             margin-bottom: 5px;
+            color: #333;
         }
-        input, select, textarea {
+
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        input[type="date"] {
             width: 100%;
             padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
+            margin-bottom: 20px;
+            border: 2px solid #ccc;
             border-radius: 5px;
+            font-size: 14px;
         }
-        button {
-            padding: 10px 20px;
-            background-color: #4CAF50;
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background-color: #2575fc;
             color: white;
+            font-size: 16px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
         }
-        button:hover {
-            background-color: #45a049;
+
+        input[type="submit"]:hover {
+            background-color: #6a11cb;
         }
+
         .error {
             color: red;
             font-size: 14px;
+            display: none;
+        }
+
+        .success {
+            color: green;
+            font-size: 14px;
+            display: none;
         }
     </style>
 </head>
 <body>
-    <h2>Submit Your Information</h2>
-    <form id="myForm">
-        <label for="name">Name:</label>
-        <select id="name" name="name" required>
-            <option value="">-- Select Name --</option>
-            <option value="Ahmed Saad">Ahmed Saad</option>
-            <option value="Saad Saeed">Saad Saeed</option>
-        </select>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
+    <div class="form-container">
+        <h2>Submit Your Information</h2>
+        <form id="myForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
 
-        <label for="date">Date (DD/MM/YYYY):</label>
-        <input type="text" id="date" name="date" pattern="\d{2}/\d{2}/\d{4}" placeholder="DD/MM/YYYY" required>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
 
-        <label for="vehicleNumber">Vehicle Number:</label>
-        <input type="number" id="vehicleNumber" name="vehicleNumber" min="1" max="8" required>
-        <div id="vehicleError" class="error"></div>
+            <label for="date">Date (DD/MM/YYYY):</label>
+            <input type="text" id="date" name="date" placeholder="DD/MM/YYYY" required>
 
-        <label for="route">Route:</label>
-        <input type="text" id="route" name="route" maxlength="5" required>
+            <label for="vehicleNumber">Vehicle Number:</label>
+            <input type="number" id="vehicleNumber" name="vehicleNumber" min="1" max="7" required>
 
-        <label for="cash">Cash:</label>
-        <input type="number" id="cash" name="cash" required>
+            <label for="route">Route (Max 5 chars):</label>
+            <input type="text" id="route" name="route" maxlength="5" required>
 
-        <label for="receivedShipments">Received Shipments:</label>
-        <input type="number" id="receivedShipments" name="receivedShipments" required>
+            <label for="cash">Cash Amount:</label>
+            <input type="number" id="cash" name="cash" required>
 
-        <label for="deliveredShipments">Delivered Shipments:</label>
-        <input type="number" id="deliveredShipments" name="deliveredShipments" required>
+            <label for="receivedShipments">Received Shipments:</label>
+            <input type="number" id="receivedShipments" name="receivedShipments" required>
 
-        <label for="lostShipments">Lost Shipments:</label>
-        <input type="number" id="lostShipments" name="lostShipments">
+            <label for="deliveredShipments">Delivered Shipments:</label>
+            <input type="number" id="deliveredShipments" name="deliveredShipments" required>
 
-        <label for="reason">Reason:</label>
-        <textarea id="reason" name="reason" rows="5" maxlength="250"></textarea>
+            <label for="reason">Reason:</label>
+            <textarea id="reason" name="reason" rows="5" maxlength="50" required></textarea>
 
-        <button type="submit">Submit</button>
-    </form>
+            <input type="submit" value="Submit">
+        </form>
+        <div class="success">Data submitted successfully!</div>
+        <div class="error">Please correct the errors in the form.</div>
+    </div>
 
     <script>
-        document.getElementById('vehicleNumber').addEventListener('input', function () {
-            const allowedNumbers = [1, 2, 3, 5, 8];
-            const vehicleError = document.getElementById('vehicleError');
-            if (!allowedNumbers.includes(parseInt(this.value))) {
-                vehicleError.textContent = "Vehicle number is incorrect!";
-            } else {
-                vehicleError.textContent = "";
-            }
-        });
-
-        document.getElementById("myForm").onsubmit = function(event) {
+        document.getElementById('myForm').onsubmit = function(event) {
             event.preventDefault();
+            
+            let date = document.getElementById('date').value;
+            let vehicleNumber = document.getElementById('vehicleNumber').value;
+            let errorElement = document.querySelector('.error');
+            let successElement = document.querySelector('.success');
 
-            const formData = new FormData(event.target);
-            formData.append("action", "submit");
+            // التحقق من صحة التاريخ
+            if (!/^\d{2}\/\d{2}\/\d{4}$/.test(date)) {
+                errorElement.textContent = 'تاريخ غير صحيح. يجب أن يكون التنسيق: DD/MM/YYYY';
+                errorElement.style.display = 'block';
+                return;
+            }
 
-            fetch("https://script.google.com/macros/s/AKfycbwcy0aD43q5QqsfA73Y06sW2irwwkdadwQ2P6GcVu--3AUaqDAdMMRHLGuljYvLPvp3XQ/exec", {
-                method: "POST",
-                body: formData,
+            // التحقق من صحة رقم السيارة
+            if (![1, 2, 3, 5, 6, 7].includes(parseInt(vehicleNumber))) {
+                errorElement.textContent = 'رقم السيارة غير صحيح. يجب أن يكون 1, 2, 3, 5, 6 أو 7.';
+                errorElement.style.display = 'block';
+                return;
+            }
+
+            errorElement.style.display = 'none';
+
+            const formData = new FormData();
+            formData.append('name', document.getElementById('name').value);
+            formData.append('email', document.getElementById('email').value);
+            formData.append('date', date);
+            formData.append('vehicleNumber', vehicleNumber);
+            formData.append('route', document.getElementById('route').value);
+            formData.append('cash', document.getElementById('cash').value);
+            formData.append('receivedShipments', document.getElementById('receivedShipments').value);
+            formData.append('deliveredShipments', document.getElementById('deliveredShipments').value);
+            formData.append('reason', document.getElementById('reason').value);
+
+            fetch('https://script.google.com/macros/s/AKfycbwcy0aD43q5QqsfA73Y06sW2irwwkdadwQ2P6GcVu--3AUaqDAdMMRHLGuljYvLPvp3XQ/exec', {
+                method: 'POST',
+                body: formData
             })
-            .then((response) => response.json())
-            .then((data) => {
+            .then(response => response.json())
+            .then(data => {
                 if (data.success) {
-                    alert("Data submitted successfully!");
+                    successElement.style.display = 'block';
+                    setTimeout(() => {
+                        successElement.style.display = 'none';
+                    }, 3000);
                 } else {
-                    alert("Error: " + data.error);
+                    errorElement.textContent = 'Error: ' + data.error;
+                    errorElement.style.display = 'block';
                 }
             })
-            .catch((error) => {
-                console.error("Error:", error);
-                alert("Failed to submit data!");
+            .catch(error => {
+                errorElement.textContent = 'Error submitting data!';
+                errorElement.style.display = 'block';
             });
         };
     </script>
