@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Submit Form</title>
     <style>
-        /* تصميم صفحة عصري */
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f7fa;
@@ -38,7 +37,8 @@
         input[type="date"],
         input[type="number"],
         input[type="button"],
-        textarea {
+        textarea,
+        select {
             width: 100%;
             padding: 10px;
             margin-bottom: 20px;
@@ -91,7 +91,13 @@
         <form id="myForm">
             <div class="form-group">
                 <label for="name">Name:</label>
-                <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                <select id="name" name="name" required>
+                    <option value="">Select Name</option>
+                    <option value="Ali">Ali</option>
+                    <option value="Ahmed">Ahmed</option>
+                    <option value="Sarah">Sarah</option>
+                    <!-- Add more options here -->
+                </select>
             </div>
             <div class="form-group">
                 <label for="email">Email:</label>
@@ -104,10 +110,12 @@
             <div class="form-group">
                 <label for="vehicleNumber">Vehicle Number:</label>
                 <input type="number" id="vehicleNumber" name="vehicleNumber" min="1" max="7" required>
+                <div id="vehicleError" class="error" style="display:none;">رقم السيارة غير صحيح. يجب أن يكون بين 1 و 7.</div>
             </div>
             <div class="form-group">
-                <label for="route">Route (letter + number):</label>
+                <label for="route">Route (letter + number, max 5 characters):</label>
                 <input type="text" id="route" name="route" placeholder="e.g., A1, B2" required>
+                <div id="routeError" class="error" style="display:none;">الروت يجب أن يتكون من حروف وأرقام فقط ولا يتجاوز 5 أحرف.</div>
             </div>
             <div class="form-group">
                 <label for="cash">Cash (numbers only):</label>
@@ -140,7 +148,7 @@
     </div>
 
     <script>
-        // إذا كانت الجلسة موجودة، لا تعرض زر التعديل
+        // حفظ الجلسة للمستخدم
         if (sessionStorage.getItem('userSession')) {
             const sessionData = JSON.parse(sessionStorage.getItem('userSession'));
             const sessionTime = new Date(sessionData.timestamp);
@@ -159,7 +167,26 @@
 
         // عند التسجيل، حفظ الجلسة للمستخدم
         document.getElementById('submitBtn').onclick = function(event) {
-            // حفظ البيانات في الجلسة
+            const vehicleNumber = document.getElementById('vehicleNumber').value;
+            const route = document.getElementById('route').value;
+
+            // التحقق من رقم السيارة
+            if (vehicleNumber < 1 || vehicleNumber > 7) {
+                document.getElementById('vehicleError').style.display = 'block';
+                return;
+            } else {
+                document.getElementById('vehicleError').style.display = 'none';
+            }
+
+            // التحقق من قيمة الروت
+            if (!/^[A-Za-z0-9]{1,5}$/.test(route)) {
+                document.getElementById('routeError').style.display = 'block';
+                return;
+            } else {
+                document.getElementById('routeError').style.display = 'none';
+            }
+
+            // حفظ بيانات الجلسة
             const userData = {
                 name: document.getElementById('name').value,
                 email: document.getElementById('email').value,
