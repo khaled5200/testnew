@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Modern Form</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Form</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,22 +13,27 @@
         form {
             background-color: #fff;
             padding: 20px;
-            border-radius: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-            margin: auto;
         }
-        input, select, button {
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, select, textarea {
             width: 100%;
             padding: 10px;
-            margin: 10px 0;
+            margin-bottom: 15px;
             border: 1px solid #ccc;
-            border-radius: 4px;
+            border-radius: 5px;
         }
         button {
+            padding: 10px 20px;
             background-color: #4CAF50;
             color: white;
             border: none;
+            border-radius: 5px;
             cursor: pointer;
         }
         button:hover {
@@ -34,138 +41,85 @@
         }
         .error {
             color: red;
-            font-size: 12px;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
+    <h2>Submit Your Information</h2>
     <form id="myForm">
-        <h2>Submit Your Information</h2>
         <label for="name">Name:</label>
-        <select id="name" name="name">
-            <option value="">Select your name</option>
+        <select id="name" name="name" required>
+            <option value="">-- Select Name --</option>
             <option value="Ahmed Saad">Ahmed Saad</option>
             <option value="Saad Saeed">Saad Saeed</option>
         </select>
-        <span id="nameError" class="error"></span>
 
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email">
-        <span id="emailError" class="error"></span>
+        <input type="email" id="email" name="email" required>
 
-        <label for="carNumber">Car Number:</label>
-        <input type="number" id="carNumber" name="carNumber">
-        <span id="carNumberError" class="error"></span>
+        <label for="date">Date (DD/MM/YYYY):</label>
+        <input type="text" id="date" name="date" pattern="\d{2}/\d{2}/\d{4}" placeholder="DD/MM/YYYY" required>
+
+        <label for="vehicleNumber">Vehicle Number:</label>
+        <input type="number" id="vehicleNumber" name="vehicleNumber" min="1" max="8" required>
+        <div id="vehicleError" class="error"></div>
 
         <label for="route">Route:</label>
-        <input type="text" id="route" name="route" maxlength="5">
-        <span id="routeError" class="error"></span>
+        <input type="text" id="route" name="route" maxlength="5" required>
 
         <label for="cash">Cash:</label>
-        <input type="number" id="cash" name="cash">
-        <span id="cashError" class="error"></span>
+        <input type="number" id="cash" name="cash" required>
+
+        <label for="receivedShipments">Received Shipments:</label>
+        <input type="number" id="receivedShipments" name="receivedShipments" required>
+
+        <label for="deliveredShipments">Delivered Shipments:</label>
+        <input type="number" id="deliveredShipments" name="deliveredShipments" required>
+
+        <label for="lostShipments">Lost Shipments:</label>
+        <input type="number" id="lostShipments" name="lostShipments">
+
+        <label for="reason">Reason:</label>
+        <textarea id="reason" name="reason" rows="5" maxlength="250"></textarea>
 
         <button type="submit">Submit</button>
     </form>
 
     <script>
-        const form = document.getElementById('myForm');
-
-        form.addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            let valid = true;
-
-            // Validate name
-            const name = document.getElementById('name').value;
-            const nameError = document.getElementById('nameError');
-            if (!name) {
-                nameError.textContent = "Please select a name.";
-                valid = false;
+        document.getElementById('vehicleNumber').addEventListener('input', function () {
+            const allowedNumbers = [1, 2, 3, 5, 8];
+            const vehicleError = document.getElementById('vehicleError');
+            if (!allowedNumbers.includes(parseInt(this.value))) {
+                vehicleError.textContent = "Vehicle number is incorrect!";
             } else {
-                nameError.textContent = "";
-            }
-
-            // Validate email
-            const email = document.getElementById('email').value;
-            const emailError = document.getElementById('emailError');
-            if (!email || !email.includes("@")) {
-                emailError.textContent = "Please enter a valid email.";
-                valid = false;
-            } else {
-                emailError.textContent = "";
-            }
-
-            // Validate car number
-            const carNumber = parseInt(document.getElementById('carNumber').value);
-            const carNumberError = document.getElementById('carNumberError');
-            if (![1, 2, 3, 5, 8].includes(carNumber)) {
-                carNumberError.textContent = "Invalid car number. Allowed: 1, 2, 3, 5, 8.";
-                valid = false;
-            } else {
-                carNumberError.textContent = "";
-            }
-
-            // Validate route
-            const route = document.getElementById('route').value;
-            const routeError = document.getElementById('routeError');
-            if (!/^[A-Za-z0-9]{1,5}$/.test(route)) {
-                routeError.textContent = "Route must be alphanumeric and not exceed 5 characters.";
-                valid = false;
-            } else {
-                routeError.textContent = "";
-            }
-
-            // Validate cash
-            const cash = document.getElementById('cash').value;
-            const cashError = document.getElementById('cashError');
-            if (!cash || isNaN(cash)) {
-                cashError.textContent = "Please enter a valid number.";
-                valid = false;
-            } else {
-                cashError.textContent = "";
-            }
-
-            if (valid) {
-                const formData = {
-                    name: name,
-                    email: email,
-                    carNumber: carNumber,
-                    route: route,
-                    cash: cash
-                };
-
-                // Save data to localStorage
-                localStorage.setItem('formData', JSON.stringify(formData));
-
-                // Send data to Google Apps Script
-                fetch('https://script.google.com/macros/s/AKfycbwcy0aD43q5QqsfA73Y06sW2irwwkdadwQ2P6GcVu--3AUaqDAdMMRHLGuljYvLPvp3XQ/exec', {
-                    method: 'POST',
-                    body: JSON.stringify(formData),
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    alert('Data submitted successfully!');
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Error submitting data.');
-                });
+                vehicleError.textContent = "";
             }
         });
 
-        // Prefill form if data exists
-        const savedData = JSON.parse(localStorage.getItem('formData'));
-        if (savedData) {
-            document.getElementById('name').value = savedData.name;
-            document.getElementById('email').value = savedData.email;
-            document.getElementById('carNumber').value = savedData.carNumber;
-            document.getElementById('route').value = savedData.route;
-            document.getElementById('cash').value = savedData.cash;
-        }
+        document.getElementById("myForm").onsubmit = function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(event.target);
+            formData.append("action", "submit");
+
+            fetch("YOUR_SCRIPT_URL_HERE", {
+                method: "POST",
+                body: formData,
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.success) {
+                    alert("Data submitted successfully!");
+                } else {
+                    alert("Error: " + data.error);
+                }
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+                alert("Failed to submit data!");
+            });
+        };
     </script>
 </body>
 </html>
