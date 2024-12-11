@@ -103,7 +103,7 @@
             const formData = new FormData(event.target);
             formData.append("action", "submit");
 
-            fetch("YOUR_SCRIPT_URL_HERE", {
+            fetch("https://script.google.com/macros/s/AKfycbwcy0aD43q5QqsfA73Y06sW2irwwkdadwQ2P6GcVu--3AUaqDAdMMRHLGuljYvLPvp3XQ/exec", {
                 method: "POST",
                 body: formData,
             })
