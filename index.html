@@ -140,7 +140,33 @@
     </div>
 
     <script>
+        // إذا كانت الجلسة موجودة، لا تعرض زر التعديل
+        if (sessionStorage.getItem('userSession')) {
+            const sessionData = JSON.parse(sessionStorage.getItem('userSession'));
+            const sessionTime = new Date(sessionData.timestamp);
+            const currentTime = new Date();
+            const diffTime = currentTime - sessionTime;
+
+            // إذا مر أكثر من ساعة على الجلسة، حذف الجلسة
+            if (diffTime > 3600000) {
+                sessionStorage.removeItem('userSession');
+                alert("Session expired.");
+            } else {
+                document.getElementById('submitBtn').disabled = true; // تعطيل زر التعديل بعد التسجيل
+                alert("You can modify the form until the session expires.");
+            }
+        }
+
+        // عند التسجيل، حفظ الجلسة للمستخدم
         document.getElementById('submitBtn').onclick = function(event) {
+            // حفظ البيانات في الجلسة
+            const userData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                timestamp: new Date().toISOString()
+            };
+            sessionStorage.setItem('userSession', JSON.stringify(userData));
+
             // منع إرسال الطلب أكثر من مرة
             document.getElementById('submitBtn').disabled = true;
 
