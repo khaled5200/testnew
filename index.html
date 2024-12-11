@@ -1,149 +1,96 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نموذج إدخال البيانات</title>
+    <title>Submit Form</title>
 </head>
 <body>
-    <form id="shipment-form">
-        <label for="date">التاريخ:</label>
-        <input type="text" id="date" name="date" required><br>
-
-        <label for="month-year">الشهر والسنة:</label>
-        <input type="text" id="month-year" name="month-year" required><br>
-
-        <label for="name">الاسم:</label>
-        <input type="text" id="name" name="name" required><br>
-
-        <label for="vehicle-number">رقم السيارة:</label>
-        <input type="text" id="vehicle-number" name="vehicle-number" required><br>
-
-        <label for="route-number">رقم الرحلة:</label>
-        <input type="text" id="route-number" name="route-number" required><br>
-
-        <label for="cycle-number">رقم الدورة:</label>
-        <input type="text" id="cycle-number" name="cycle-number" required><br>
-
-        <label for="cash">النقدي:</label>
-        <input type="number" id="cash" name="cash" required><br>
-
-        <label for="total-shipments">إجمالي الشحنات:</label>
-        <input type="number" id="total-shipments" name="total-shipments" required><br>
-
-        <label for="delivered-shipments">الشحنات الموصلة:</label>
-        <input type="number" id="delivered-shipments" name="delivered-shipments" required><br>
-
-        <label for="returned-shipments">الشحنات المرتجعة:</label>
-        <input type="number" id="returned-shipments" name="returned-shipments" required><br>
-
-        <label for="returned-reason">سبب الإرجاع:</label>
-        <input type="text" id="returned-reason" name="returned-reason"><br>
-
-        <label for="helped-colleague">هل ساعدت زميلًا؟</label>
-        <input type="checkbox" id="helped-colleague" name="helped-colleague"><br>
-
-        <label for="colleague-name">اسم الزميل:</label>
-        <input type="text" id="colleague-name" name="colleague-name"><br>
-
-        <label for="received-shipments">الشحنات المستلمة:</label>
-        <input type="number" id="received-shipments" name="received-shipments"><br>
-
-        <label for="received-delivered-shipments">الشحنات المستلمة والموصلة:</label>
-        <input type="number" id="received-delivered-shipments" name="received-delivered-shipments"><br>
-
-        <label for="helper-name">اسم المساعد:</label>
-        <input type="text" id="helper-name" name="helper-name"><br>
-
-        <label for="helper-delivered-shipments">الشحنات الموصلة بواسطة المساعد:</label>
-        <input type="number" id="helper-delivered-shipments" name="helper-delivered-shipments"><br>
-
-        <button type="submit">حفظ البيانات</button>
+    <h2>Submit Your Information</h2>
+    <form id="myForm">
+        <label for="date">Date (dd/mm/yyyy):</label><br>
+        <input type="text" id="date" name="date" placeholder="dd/mm/yyyy" maxlength="10" oninput="formatDate(this)"><br><br>
+        
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" list="nameList" placeholder="Search name..." required><br><br>
+        <datalist id="nameList">
+            <option value="Ahmed saad">
+            <option value="saad saeed">
+        </datalist><br><br>
+        
+        <label for="vehicleNumber">Vehicle Number:</label><br>
+        <input type="number" id="vehicleNumber" name="vehicleNumber" min="1" max="7" required><br><br>
+        
+        <label for="route">Route (Letter + Number):</label><br>
+        <input type="text" id="route" name="route" pattern="[A-Za-z][0-9]" required><br><br>
+        
+        <label for="cash">Cash:</label><br>
+        <input type="number" id="cash" name="cash" required><br><br>
+        
+        <label for="receivedShipments">Received Shipments:</label><br>
+        <input type="number" id="receivedShipments" name="receivedShipments" required><br><br>
+        
+        <label for="deliveredShipments">Delivered Shipments:</label><br>
+        <input type="number" id="deliveredShipments" name="deliveredShipments" required><br><br>
+        
+        <label for="returnedShipments">Returned Shipments:</label><br>
+        <input type="text" id="returnedShipments" name="returnedShipments" readonly><br><br>
+        
+        <label for="lostShipments">Lost Shipments:</label><br>
+        <input type="number" id="lostShipments" name="lostShipments" required><br><br>
+        
+        <label for="reason">Reason (Max 50 characters per line, 5 lines):</label><br>
+        <textarea id="reason" name="reason" rows="5" maxlength="50" required></textarea><br><br>
+        
+        <input type="submit" value="Submit">
     </form>
-
+    
     <script>
-        const form = document.getElementById('shipment-form');
+        // Format Date input to dd/mm/yyyy with automatic "/"
+        function formatDate(input) {
+            let value = input.value.replace(/[^0-9]/g, '').slice(0, 8); // Allow only numbers and limit to 8 digits
+            if (value.length > 2) value = value.slice(0, 2) + '/' + value.slice(2);
+            if (value.length > 5) value = value.slice(0, 5) + '/' + value.slice(5, 10);
+            input.value = value;
+        }
+        
+        // Calculate returned shipments automatically
+        document.getElementById('myForm').onsubmit = function(event) {
+            event.preventDefault();
+            
+            const received = document.getElementById('receivedShipments').value;
+            const delivered = document.getElementById('deliveredShipments').value;
+            
+            // Calculate returned shipments
+            const returned = received - delivered;
+            document.getElementById('returnedShipments').value = returned;
 
-        // عند إرسال النموذج
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            validateShipments();
+            const formData = new FormData();
+            formData.append('date', document.getElementById('date').value);
+            formData.append('name', document.getElementById('name').value);
+            formData.append('vehicleNumber', document.getElementById('vehicleNumber').value);
+            formData.append('route', document.getElementById('route').value);
+            formData.append('cash', document.getElementById('cash').value);
+            formData.append('receivedShipments', received);
+            formData.append('deliveredShipments', delivered);
+            formData.append('returnedShipments', returned);
+            formData.append('lostShipments', document.getElementById('lostShipments').value);
+            formData.append('reason', document.getElementById('reason').value);
 
-            // جمع البيانات المدخلة في النموذج
-            const formData = new FormData(form);
-
-            // استخراج القيم
-            const date = formData.get('date');
-            const monthYear = formData.get('month-year');
-            const name = formData.get('name');
-            const vehicleNumber = formData.get('vehicle-number');
-            const routeNumber = formData.get('route-number');
-            const cycleNumber = formData.get('cycle-number');
-            const cash = formData.get('cash');
-            const totalShipments = formData.get('total-shipments');
-            const deliveredShipments = formData.get('delivered-shipments');
-            const returnedShipments = formData.get('returned-shipments');
-            const returnedReason = [];
-            const helpedColleague = formData.get('helped-colleague');
-            const colleagueName = formData.get('colleague-name');
-            const receivedShipments = formData.get('received-shipments');
-            const receivedDeliveredShipments = formData.get('received-delivered-shipments');
-            const helperName = formData.get('helper-name');
-            const helperDeliveredShipments = formData.get('helper-delivered-shipments');
-
-            // جمع أسباب الشحنات المرتجعة
-            for (let i = 1; i <= returnedShipments; i++) {
-                returnedReason.push(formData.get(`returned-reason-${i}`));
-            }
-
-            // إعداد البيانات للإرسال إلى السيرفر
-            const data = {
-                date,
-                monthYear,
-                name,
-                vehicleNumber,
-                routeNumber,
-                cycleNumber,
-                cash,
-                totalShipments,
-                deliveredShipments,
-                returnedShipments,
-                returnedReason,
-                helpedColleague,
-                colleagueName,
-                receivedShipments,
-                receivedDeliveredShipments,
-                helperName,
-                helperDeliveredShipments,
-            };
-
-            // إرسال البيانات باستخدام fetch إلى السكربت الذي يعالج البيانات
             fetch('https://script.google.com/macros/s/AKfycbzc1EdbkvTHQKNMEILgYSBrdjj9klaeMiqSL_RzItBosiV3ocJFcV8bBEm8Yn1u3cbn6w/exec', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
+                body: formData
             })
             .then(response => response.json())
-            .then(result => {
-                alert('تم حفظ البيانات بنجاح!');
-                form.reset(); // إعادة تعيين النموذج بعد الحفظ
+            .then(data => {
+                if (data.success) {
+                    alert('Data submitted successfully!');
+                } else {
+                    alert('Error submitting data: ' + data.error);
+                }
             })
             .catch(error => {
-                console.error('حدث خطأ:', error);
-                alert('حدث خطأ أثناء حفظ البيانات.');
+                console.error('Error:', error);
+                alert('Error submitting data!');
             });
-        });
-
-        // تحقق من صحة الشحنات
-        function validateShipments() {
-            // التحقق من أن الشحنات الموصلة لا تتجاوز الإجمالي
-            const deliveredShipments = parseInt(document.getElementById('delivered-shipments').value);
-            const totalShipments = parseInt(document.getElementById('total-shipments').value);
-            if (deliveredShipments > totalShipments) {
-                alert('عدد الشحنات الموصلة لا يمكن أن يتجاوز إجمالي الشحنات.');
-            }
         }
     </script>
 </body>
